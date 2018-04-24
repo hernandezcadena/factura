@@ -1,0 +1,10 @@
+module DetalleApp{
+    interface Detalle{
+        boolean insertarDetalle(in long CL_ID,in wstring CL_NOMBRE, in wstring CL_DIRECCION, in long CL_TEL,in wstring CL_ESTADO);
+        wstring consultarDetalle(in long CL_ID,in wstring CL_NOMBRE, in wstring CL_DIRECCION, in long CL_TEL,in wstring CL_ESTADO);
+        boolean eliminarDetalle(in long CL_ID,in wstring CL_NOMBRE, in wstring CL_DIRECCION, in long CL_TEL,in wstring CL_ESTADO);
+        boolean actualizarDetalle(in long CL_ID,in wstring CL_NOMBRE, in wstring CL_DIRECCION, in long CL_TEL,in wstring CL_ESTADO);
+        wstring listarDetalle();
+        oneway void shutdown();
+};
+};
