@@ -58,12 +58,42 @@ public class Cliente extends ClienteApp.ClientePOA {
 
     @Override
     public boolean eliminarCliente(int CL_ID, String CL_NOMBRE, String CL_DIRECCION, int CL_TEL, String CL_ESTADO) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean resultado=false;
+        try {  
+        String query ="delete from cliente where CL_ID = "+CL_ID;
+        conex.conexion();
+            Statement st = conex.conex.createStatement();
+            int valor =st.executeUpdate(query);
+            if (valor >0){
+                resultado=true;
+                JOptionPane.showMessageDialog(null, "datos eliminado correctamente");
+            }
+            st.close();
+            conex.conex.close();
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error"+e.getMessage());
+        }
+      return resultado;
     }
 
     @Override
     public boolean actualizarCliente(int CL_ID, String CL_NOMBRE, String CL_DIRECCION, int CL_TEL, String CL_ESTADO) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         boolean resultado=false;
+        try {
+        String query ="update cliente set Cl_NOMBRE = '"+CL_NOMBRE+"',CL_DIRECCION= '"+CL_DIRECCION+"',CL_TEL= '"+CL_TEL+"',CL_ESTADO= '"+CL_ESTADO+ "' where CL_ID='"+CL_ID+"'";
+         conex.conexion();
+            Statement st = conex.conex.createStatement();
+            int valor =st.executeUpdate(query);
+            if (valor >0){
+                resultado=true;
+                JOptionPane.showMessageDialog(null, "datos insertados correctamente");
+            }
+            st.close();
+            conex.conex.close();
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error"+e.getMessage());
+        }
+      return resultado;
     }
 
     @Override
@@ -96,5 +126,19 @@ public class Cliente extends ClienteApp.ClientePOA {
     public void shutdown() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+    public ResultSet listaEstados (){
+        ResultSet resultado = null;
+        
+      try {
+            String query = "Select id, nombre from estado";
+            conex.conexion();
+            Statement st = conex.conex.createStatement();
+            resultado =st.executeQuery(query);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"ocurrio un error"+ e.getMessage());
+        }
+        return resultado;
+        
+    }
 }
