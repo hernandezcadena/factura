@@ -1,12 +1,28 @@
 
+import java.sql.ResultSet;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 
 public class ParqueaderoFrm extends javax.swing.JFrame {
 
-   
+   //atributo para crear el combo
+       private DefaultComboBoxModel modeloCombo;
+     
     public ParqueaderoFrm() {
+        modeloCombo = new DefaultComboBoxModel(new String []{});
         initComponents();
+        
+        Persona objPersona = new Persona();
+        ResultSet estados;
+        estados = objPersona.listaEstados();
+        try {
+            while(estados.next()){
+            modeloCombo.addElement(new Estado(estados.getInt("id"),estados.getString("nombre")));
+        }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"ocuerrio un error"+ e.getMessage());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -42,6 +58,7 @@ public class ParqueaderoFrm extends javax.swing.JFrame {
         btnconsultar = new javax.swing.JToggleButton();
         btneliminar = new javax.swing.JToggleButton();
         btnACTUALIZAR = new javax.swing.JToggleButton();
+        jComboBox3 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImages(null);
@@ -161,6 +178,13 @@ public class ParqueaderoFrm extends javax.swing.JFrame {
             }
         });
 
+        jComboBox3.setModel(modeloCombo);
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -185,11 +209,16 @@ public class ParqueaderoFrm extends javax.swing.JFrame {
                             .addComponent(txttelefono, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtnombre, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtidentificacion, javax.swing.GroupLayout.Alignment.LEADING))))
-                .addGap(151, 151, 151)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addGap(170, 170, 170))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(151, 151, 151)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(136, 136, 136)
+                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(126, 126, 126))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -254,8 +283,13 @@ public class ParqueaderoFrm extends javax.swing.JFrame {
                     .addComponent(txtdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lst1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lst1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)))
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -295,7 +329,7 @@ public class ParqueaderoFrm extends javax.swing.JFrame {
     private void btninsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btninsertarActionPerformed
       Cliente per =new Cliente ();
       per.insertarCliente(Integer.parseInt(txtidentificacion.getText()), txtnombre.getText(), txtdireccion.getText(),Integer.parseInt(txttelefono.getText()),lst1.getSelectedItem().toString());
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_btninsertarActionPerformed
 
     private void txtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombreActionPerformed
@@ -342,6 +376,10 @@ String lista = cli.listarCliente();
       per.actualizarCliente(Integer.parseInt(txtidentificacion.getText()), txtnombre.getText(), txtdireccion.getText(),Integer.parseInt(txttelefono.getText()),lst1.getSelectedItem().toString());
     }//GEN-LAST:event_btnACTUALIZARActionPerformed
 
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -362,6 +400,7 @@ String lista = cli.listarCliente();
     private javax.swing.JButton btninsertar;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
