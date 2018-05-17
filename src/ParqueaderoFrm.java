@@ -2,17 +2,21 @@
 import java.sql.ResultSet;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 
 public class ParqueaderoFrm extends javax.swing.JFrame {
 
    //atributo para crear el combo
        private DefaultComboBoxModel modeloCombo;
+       private DefaultTableModel Modelotabla;
      
     public ParqueaderoFrm() {
         modeloCombo = new DefaultComboBoxModel(new String []{});
+        Modelotabla = new DefaultTableModel(null, getColumn());
         initComponents();
-        
+        cargarTabla();
+                
         Persona objPersona = new Persona();
         ResultSet estados;
         estados = objPersona.listaEstados();
@@ -25,6 +29,26 @@ public class ParqueaderoFrm extends javax.swing.JFrame {
         }
     }
 
+    //Metodo para cargar las columnas
+    public String[] getColumn(){
+        String column[] = new String[]{"identificacion", "nombre", "telefono"};
+        return column;
+    }
+    
+    public void cargarTabla(){
+        Cliente objCliente = new Cliente();
+        ResultSet resultado = objCliente.listaClientes();
+        try {
+            Object dato[] = new Object[3];
+            while(resultado.next()){
+                for(int i = 0; i<3;i++){
+                    dato[i] = resultado.getObject(i+1);
+                }
+                Modelotabla.addRow(dato);
+            }
+        } catch (Exception e) {
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -42,7 +66,7 @@ public class ParqueaderoFrm extends javax.swing.JFrame {
         txttelefono = new javax.swing.JTextField();
         lst1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtpersona = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -58,7 +82,7 @@ public class ParqueaderoFrm extends javax.swing.JFrame {
         btnconsultar = new javax.swing.JToggleButton();
         btneliminar = new javax.swing.JToggleButton();
         btnACTUALIZAR = new javax.swing.JToggleButton();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cboEstado = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImages(null);
@@ -123,18 +147,8 @@ public class ParqueaderoFrm extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Detalle", "Valor", "Cantidad"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        jtpersona.setModel(Modelotabla);
+        jScrollPane1.setViewportView(jtpersona);
 
         jLabel7.setText("IVA :");
 
@@ -178,10 +192,10 @@ public class ParqueaderoFrm extends javax.swing.JFrame {
             }
         });
 
-        jComboBox3.setModel(modeloCombo);
-        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+        cboEstado.setModel(modeloCombo);
+        cboEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox3ActionPerformed(evt);
+                cboEstadoActionPerformed(evt);
             }
         });
 
@@ -217,7 +231,7 @@ public class ParqueaderoFrm extends javax.swing.JFrame {
                             .addComponent(jLabel10)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(136, 136, 136)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(126, 126, 126))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,7 +302,7 @@ public class ParqueaderoFrm extends javax.swing.JFrame {
                         .addComponent(lst1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(15, 15, 15)))
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -328,6 +342,9 @@ public class ParqueaderoFrm extends javax.swing.JFrame {
 
     private void btninsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btninsertarActionPerformed
       Cliente per =new Cliente ();
+      Estado OdjEstado =(Estado)cboEstado.getSelectedItem();
+      int estado= OdjEstado.getId();
+      
       per.insertarCliente(Integer.parseInt(txtidentificacion.getText()), txtnombre.getText(), txtdireccion.getText(),Integer.parseInt(txttelefono.getText()),lst1.getSelectedItem().toString());
        
     }//GEN-LAST:event_btninsertarActionPerformed
@@ -376,9 +393,9 @@ String lista = cli.listarCliente();
       per.actualizarCliente(Integer.parseInt(txtidentificacion.getText()), txtnombre.getText(), txtdireccion.getText(),Integer.parseInt(txttelefono.getText()),lst1.getSelectedItem().toString());
     }//GEN-LAST:event_btnACTUALIZARActionPerformed
 
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+    private void cboEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEstadoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox3ActionPerformed
+    }//GEN-LAST:event_cboEstadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -398,9 +415,9 @@ String lista = cli.listarCliente();
     private javax.swing.JToggleButton btneliminar;
     private javax.swing.JToggleButton btnenlistar;
     private javax.swing.JButton btninsertar;
+    private javax.swing.JComboBox<String> cboEstado;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -412,11 +429,11 @@ String lista = cli.listarCliente();
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTable jtpersona;
     private javax.swing.JComboBox<String> lst1;
     private javax.swing.JTextField txtdireccion;
     private javax.swing.JTextField txtidentificacion;
