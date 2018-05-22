@@ -1,9 +1,9 @@
 module ProductoApp{
     interface Producto{
-        boolean insertarProducto(in long pro_id,in wstring pro_detalle, in long pro_valor, in wstring pro_estado);
-        wstring consultarProducto(in long pro_id,in wstring pro_detalle, in long pro_valor, in wstring pro_estado);
-        boolean eliminarProducto(in long pro_id,in wstring pro_detalle, in long pro_valor, in wstring pro_estado);
-        boolean actualizarProducto(in long pro_id,in wstring pro_detalle, in long pro_valor, in wstring pro_estado);
+        boolean insertarProducto(in long pro_id,in wstring pro_detalle, in long pro_valor);
+        wstring consultarProducto(in long pro_id,in wstring pro_detalle, in long pro_valor);
+        boolean eliminarProducto(in long pro_id,in wstring pro_detalle, in long pro_valor);
+        boolean actualizarProducto(in long pro_id,in wstring pro_detalle, in long pro_valor);
         wstring listarProducto();
         oneway void shutdown();
 };

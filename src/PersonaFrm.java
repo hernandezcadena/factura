@@ -18,6 +18,7 @@ public class PersonaFrm extends javax.swing.JFrame {
         ResultSet estados;
         estados = objPersona.listaEstados();
         try {
+            
             while(estados.next()){
             modeloCombo.addElement(new Estado(estados.getInt("id"),estados.getString("nombre")));
         }

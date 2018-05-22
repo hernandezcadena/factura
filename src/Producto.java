@@ -8,12 +8,11 @@ private ORB orb;
     Conexion conex = new Conexion();
     
     @Override
-    public boolean insertarProducto(int pro_id, String pro_detalle, int pro_valor, String pro_estado) {
+    public boolean insertarProducto(int pro_id, String pro_detalle, int pro_valor) {
       boolean resultado=false;
         try {
             
-            String query ="insert into Producto(pro_id,pro_detalle,pro_valor,pro_estado)"
-            + "value('"+ pro_id+"','"+pro_detalle+"','"+pro_valor+"','"+pro_estado+"')";
+            String query ="insert into Producto(pro_id,pro_detalle,pro_valor)" + "value('"+ pro_id+"','"+pro_detalle+"','"+pro_valor+"')";
             conex.conexion();
             Statement st = conex.conex.createStatement();
             int valor =st.executeUpdate(query);
@@ -30,17 +29,17 @@ private ORB orb;
     }
 
     @Override
-    public String consultarProducto(int pro_id, String pro_detalle, int pro_valor, String pro_estado) {
+    public String consultarProducto(int pro_id, String pro_detalle, int pro_valor) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override
-    public boolean eliminarProducto(int pro_id, String pro_detalle, int pro_valor, String pro_estado) {
+    public boolean eliminarProducto(int pro_id, String pro_detalle, int pro_valor) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public boolean actualizarProducto(int pro_id, String pro_detalle, int pro_valor, String pro_estado) {
+    public boolean actualizarProducto(int pro_id, String pro_detalle, int pro_valor) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
 

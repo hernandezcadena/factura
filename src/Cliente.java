@@ -126,11 +126,11 @@ public class Cliente extends ClienteApp.ClientePOA {
     public void shutdown() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    public ResultSet listaEstados (){
+    public ResultSet listaClientes (){
         ResultSet resultado = null;
         
       try {
-            String query = "Select id, nombre from estado";
+            String query = "Select CL_ID, Cl_NOMBRE, CL_TEL from cliente";
             conex.conexion();
             Statement st = conex.conex.createStatement();
             resultado =st.executeQuery(query);
