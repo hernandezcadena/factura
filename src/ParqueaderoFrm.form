@@ -52,7 +52,7 @@
                                   <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="63" max="32767" attributes="0"/>
+                              <EmptySpace pref="75" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                   <Component id="txtdireccion" alignment="0" pref="108" max="32767" attributes="0"/>
                                   <Component id="txttelefono" alignment="0" max="32767" attributes="0"/>
@@ -109,7 +109,7 @@
                       <Component id="btnACTUALIZAR" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="166" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
