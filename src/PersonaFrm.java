@@ -2,8 +2,6 @@
 import java.sql.ResultSet;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-
-
  
 public class PersonaFrm extends javax.swing.JFrame {
 
